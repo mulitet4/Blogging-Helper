@@ -11,15 +11,15 @@ def convert(symbol, text):
 		return f"<span style=\"font-family: Comfortaa; font-size: {symbols[symbol]};\">{text}</span><br>"
 
 
-def get_bold_text(text: str) -> str:
-	regex = r"\*(.*?)\*"
+def pre_process_text(text: str) -> str:
+	'''
+	Converts bold and links and returns text
+	'''
+	regex_bold = r"\*(.*?)\*"
+	regex_link = r"\[(.*?)\]\((.*?)\)"
 
-	for word in text.split(" "):
-		to_bold = re.search(regex, word)
-		if to_bold == None:
-			continue
-
-		text = text.replace(to_bold.group(), f"<b>{to_bold.group(1)}</b>")
+	text = re.sub(regex_bold, r"<b>\1</b>", text)
+	text = re.sub(regex_link, "<a href = \"\\2\" target = \"_blank\">\\1</a>", text)
 		
 	return text
 
@@ -36,7 +36,7 @@ def process(text):
 			symbol, text = line.split(" ", 1)
 
 			#? Get the bolded text beforehand.
-			text = get_bold_text(text)
+			text = pre_process_text(text)
 
 			converted_line = convert(symbol, text)
 
@@ -47,13 +47,13 @@ def process(text):
 	
 	
 def read_file():
-	with open("article.txt", "r") as f:
+	with open("article.txt", "r", encoding="utf8") as f:
 		text = f.read()
 	return text
 
 
 def save_file(text):
-	with open("output/out.txt", "w") as f:
+	with open("output/out.txt", "w", encoding="utf8") as f:
 		f.write(text)
 
 
