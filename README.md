@@ -37,6 +37,7 @@ The symbols borrow their origin partially from Markdown (a file type).
 | ##          | Smaller Title|
 | p           | Paragraph    |
 | \*text\*    | Bold Text    |
+| \[link-title\]\(link) | Links |
 
 Currently, this is the scope for the Script. I'll probably add more features in the near future as and when I need them!
 
